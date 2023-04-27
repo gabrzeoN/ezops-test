@@ -1,0 +1,19 @@
+
+name: TestApp
+on: [pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_MONGO_URL: ${{secrets.MONGO_URL_TEST_DB}}
+          directory: ./
+          file_name: .env
+      - name: Build app test image
+        run: docker build -t ezops-test -f ./Dockerfile.test .
+      - name: Run tests
+        run: docker run ezops-test

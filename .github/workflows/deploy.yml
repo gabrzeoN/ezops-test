@@ -1,0 +1,30 @@
+
+name: DeployApp
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: self-hosted
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_MONGO_URL: ${{secrets.MONGO_URL_PROD_DB}}
+          directory: ./
+          file_name: .env
+          fail_on_empty: true
+      - name: Build app production image
+        run: sudo docker build -t ezops-prod -f ./Dockerfile .
+      - name: Stop previous running container
+        run: sudo docker stop ezops-prod-container
+      - name: Remove previous running container
+        run: sudo docker rm ezops-prod-container
+      - name: Start app server on docker container
+        run: sudo docker run --name ezops-prod-container -d -p 3000:3000 ezops-prod
+      - name: Copy index.html to /var/www/html
+        run: sudo cp ./public/index.html /var/www/html/index.nginx-debian.html
