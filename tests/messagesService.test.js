@@ -13,6 +13,9 @@ describe("messagesService", () => {
     it("should be 0", () => {
       expect(0).toBe(0);
     });
+    it("should be 1", () => {
+      expect(1).toBe(1);
+    });
     it("should get all messages", () => {
           const messages = [{
             _id: "6449e7bdb691570f8079f467",
