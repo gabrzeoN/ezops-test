@@ -34,7 +34,9 @@
     </div>
   </div>
   <script type="module">
-    const socket = io("http://localhost:3000");
+    // const url = "http://localhost:3000"
+    const url = "http://54.224.167.78:3000"
+    const socket = io(url);
     
     $(() => {
       getMessages()
@@ -50,13 +52,13 @@
     }
 
     function getMessages() {
-      $.get('http://localhost:3000/messages', (data) => {
+      $.get(`${url}/messages`, (data) => {
         data.forEach(addMessages);
       })
     }
 
     function sendMessage(message) {
-      axios.post('http://localhost:3000/messages', message)
+      axios.post(`${url}/messages`, message)
     }
   </script>
 </body>
