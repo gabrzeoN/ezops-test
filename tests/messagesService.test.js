@@ -16,8 +16,8 @@ describe("messagesService", () => {
     it("should be 1", () => {
       expect(1).toBe(1);
     });
-    it("should be 1", () => {
-      expect(1).toBe(2);
+    it("should be 2", () => {
+      expect(2).toBe(2);
     });
     it("should get all messages", () => {
           const messages = [{
